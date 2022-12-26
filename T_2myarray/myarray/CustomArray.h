@@ -137,7 +137,6 @@ public:
 
 		for (size_t i = size_ - 1; i > index; i--) {
 			data_[i] = std::move(data_[i - 1]);
-			data_[i - 1].~T();
 		}
 
 		data_[index] = value;
@@ -151,11 +150,15 @@ public:
 		}
 		else {
 
+
+
 			for (size_t i = index; i != size_ - 1; ++i)
 			{
 				data_[i] = std::move(data_[i + 1]);
-				data_[i + 1].~T();
 			}
+
+			data_[size_ - 1].~T();
+
 
 			return --size_;
 		}
